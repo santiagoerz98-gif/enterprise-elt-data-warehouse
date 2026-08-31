@@ -1,4 +1,10 @@
+import os
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
+
+DB_CONNECTION_STRING = os.getenv("DATABASE_URL")
 
 DATABASE_TABLES = [
     "customers",
@@ -11,3 +17,4 @@ DATABASE_TABLES = [
 ]
 
 RAW_DATA_DIR = Path("data") / "raw" / "northwind"
+

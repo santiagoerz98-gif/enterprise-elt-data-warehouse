@@ -18,3 +18,4 @@ DATABASE_TABLES = [
 
 RAW_DATA_DIR = Path("data") / "raw" / "northwind"
 
+DUCKDB_DIR = Path("warehouse") / "northwind_dw.duckdb"

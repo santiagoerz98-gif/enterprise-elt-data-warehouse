@@ -1,0 +1,72 @@
+# Name your project! Project names should contain only lowercase characters
+# and underscores. A good package name should reflect your organization's
+# name or the intended use of these models
+name: "northwind_datawarehouse"
+version: "1.0.0"
+
+# This setting configures which "profile" dbt uses for this project.
+profile: "northwind_datawarehouse"
+
+# These configurations specify where dbt should look for different types of files.
+# The `model-paths` config, for example, states that models in this project can be
+# found in the "models/" directory. You probably won't need to change these!
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets: # directories to be removed by `dbt clean`
+  - "target"
+  - "dbt_packages"
+
+# Configuring models
+# Full documentation: https://docs.getdbt.com/docs/configuring-models
+
+# In this example config, we tell dbt to build all models in the example/
+# directory as views. These settings can be overridden in the individual model
+# files using the `{{ config(...) }}` macro.
+
+#------------------------------------------------------------------------------------------------
+# CONFIGURATIONS FOR THE LAYERED ARCHITECTURE (BRONZE, SILVER, GOLD)
+#------------------------------------------------------------------------------------------------
+models:
+  northwind_datawarehouse:
+    # Config indicated by + and applies to all files under models/example/
+    example:
+      +materialized: view
+
+    # 1. BRONZE LAYER / STAGING (Raw Data Ingestion)
+    # ---------------------------------------------------------------------------------------------
+    bronze:
+      # Create the bronze schema
+      # 'schema' specifies the database schema where the models will be created
+      +schema: bronze
+      # All models in the bronze layer will be materialized as tables
+      # Materializing as tables means the data will be physically stored in the database.
+      +materialized: table
+      # 'tags' are used to categorize and organize models within dbt.
+      # Tags help in filtering and running specific subsets of models within dbt.
+      +tags: ["bronze", "staging", "raw"]
+
+    # 2. SILVER LAYER / INTERMEDIATE (Data Cleansing and Transformation)
+    # ---------------------------------------------------------------------------------------------
+    silver:
+      # Create the silver schema
+      +schema: silver
+      # All models in the silver layer will be materialized as tables
+      # Materializing as tables means the data will be physically stored in the database.
+      # This accelerates query performance for subsequent layers.
+      +materialized: table
+      # Tags for the silver layer
+      +tags: ["silver", "intermediate"]
+
+    # 3. GOLD LAYER / BUSINESS (Aggregated and Business-Ready Data)
+    gold:
+      # Create the gold schema
+      +schema: gold
+      # All models in the gold layer will be materialized as tables
+      +materialized: table
+      # Tags for the gold layer
+      +tags: ["gold", "marts"]

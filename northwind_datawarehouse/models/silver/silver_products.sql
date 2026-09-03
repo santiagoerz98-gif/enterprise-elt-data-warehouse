@@ -22,7 +22,7 @@ SELECT
     TRIM(c.description) AS category_description,
 
     TRIM(s.company_name) AS supplier_name,
-    TRIM(s.country) AS supplier_country
+    TRIM(s.country) AS supplier_country,
 
     -- Prices and financial metrics
     CAST(COALESCE(p.unit_price, 0) AS DECIMAL(10, 2)) AS unit_price,

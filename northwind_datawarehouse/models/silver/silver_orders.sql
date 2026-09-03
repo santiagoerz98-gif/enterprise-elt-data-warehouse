@@ -16,14 +16,15 @@ SELECT
     o.shipped_date,
 
     -- Customer address
-    TRIM(c.address),
-    TRIM(c.city),
-    TRIM(c.country),
+    TRIM(c.address) AS customer_address,
+    TRIM(c.city) AS customer_city,
+    TRIM(c.country) AS customer_country,
 
     -- Shipping address
-    TRIM(o.ship_address),
-    TRIM(o.ship_city),
-    TRIM(o.ship_country),
+    TRIM(o.ship_address) AS ship_address,
+    TRIM(o.ship_city) AS ship_city,
+    TRIM(o.ship_country) AS ship_country,
+    TRIM(o.ship_region) AS ship_region,
 
     -- Address comparison between customer and shipping addresses
     CASE
@@ -39,7 +40,7 @@ SELECT
     END AS shipping_status,
 
     -- Freight cost
-    o.freight 
+    o.freight AS freight
 
 FROM orders o
 JOIN customers c ON o.customer_id = c.customer_id

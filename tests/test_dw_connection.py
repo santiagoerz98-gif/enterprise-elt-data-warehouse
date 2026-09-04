@@ -5,6 +5,8 @@ con = duckdb.connect('warehouse/northwind_dw.duckdb')
 
 # 2. Probar una consulta sobre un modelo
 print("\n--- MUESTRA DE DATOS ---")
-print(con.execute("SELECT * FROM main_silver.silver_orders WHERE shipping_status = 'Delayed' LIMIT 10;").df())
+tables = con.execute("SHOW TABLES FROM main_silver;").df()
+for table in tables['name']:
+    print(con.execute(f"SUMMARIZE SELECT * FROM main_silver.{table};").df())
 
 con.close()

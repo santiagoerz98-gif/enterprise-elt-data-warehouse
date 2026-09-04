@@ -177,7 +177,7 @@ models:
               min_value: 0
       - name: catalog_unit_price
         description: "Current catalog unit price."
-      - name: quantity
+      - name: quantity_sold
         description: "Quantity ordered."
         tests:
           - not_null

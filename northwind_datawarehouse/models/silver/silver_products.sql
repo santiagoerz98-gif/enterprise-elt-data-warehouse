@@ -9,9 +9,9 @@ suppliers AS (
 )
 SELECT
     -- Primary and Foreign Key Columns
-    p.product_id,
-    p.category_id,
-    p.supplier_id,
+    CAST(p.product_id AS INTEGER) AS product_id,
+    CAST(p.category_id AS INTEGER) AS category_id,
+    CAST(p.supplier_id AS INTEGER) AS supplier_id,
 
     -- product details
     TRIM(p.product_name) AS product_name,

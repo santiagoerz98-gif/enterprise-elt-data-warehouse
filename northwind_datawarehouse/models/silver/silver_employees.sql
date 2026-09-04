@@ -10,7 +10,7 @@ direct_reports_count AS (
 )
 SELECT
     -- Employee Details
-    e.employee_id,
+    CAST(e.employee_id AS INTEGER) AS employee_id,
     TRIM(e.first_name) || ' ' || TRIM(e.last_name) AS full_name,
     TRIM(e.title) AS title,
     CAST(e.birth_date AS DATE) AS birth_date,
@@ -22,7 +22,7 @@ SELECT
     COALESCE(TRIM(e.postal_code), 'Unknown') AS postal_code,
 
     -- Manager Information
-    CAST(e.reports_to AS INT) AS manager_id,
+    CAST(e.reports_to AS INTEGER) AS manager_id,
     COALESCE(TRIM(m.first_name) || ' ' || TRIM(m.last_name), 'No Manager') AS manager_full_name,
     COALESCE(TRIM(m.title), 'N/A') AS manager_title,
 

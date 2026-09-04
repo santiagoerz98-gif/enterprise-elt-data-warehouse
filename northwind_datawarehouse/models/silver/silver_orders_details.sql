@@ -6,13 +6,13 @@ products AS (
 )
 SELECT
     -- Primary and Foreign Key Columns
-    od.order_id,
-    od.product_id,
+    CAST(od.order_id AS INTEGER) AS order_id,
+    CAST(od.product_id AS INTEGER) AS product_id,
 
     -- Prices
     od.unit_price AS actual_unit_price,
     p.unit_price AS catalog_unit_price,
-    od.quantity,
+    CAST(od.quantity AS INTEGER) AS quantity_sold,
     od.discount AS discount_pct,
 
     -- Actual revenue

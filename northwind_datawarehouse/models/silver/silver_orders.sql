@@ -6,19 +6,14 @@ customers AS (
 )
 SELECT
     -- Primary and foreign keys
-    o.order_id,
+    CAST(o.order_id AS INTEGER) AS order_id,
     o.customer_id,
-    o.employee_id,
+    CAST(o.employee_id AS INTEGER) AS employee_id,
 
     -- Dates
     o.order_date,
     o.required_date,
     o.shipped_date,
-
-    -- Customer address
-    TRIM(c.address) AS customer_address,
-    TRIM(c.city) AS customer_city,
-    TRIM(c.country) AS customer_country,
 
     -- Shipping address
     TRIM(o.ship_address) AS ship_address,

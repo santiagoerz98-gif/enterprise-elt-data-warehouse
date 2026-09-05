@@ -19,3 +19,13 @@ DATABASE_TABLES = [
 RAW_DATA_DIR = Path("data") / "raw" / "northwind"
 
 DUCKDB_DIR = Path("warehouse") / "northwind_dw.duckdb"
+
+GOLD_LAYER_TABLES = [
+    "fact_sales",
+    "dim_customers",
+    "dim_products",
+    "dim_employees",
+    "dim_time"
+]
+
+GOLD_OUTPUT_DIR = Path("data") / "exports" / "gold"

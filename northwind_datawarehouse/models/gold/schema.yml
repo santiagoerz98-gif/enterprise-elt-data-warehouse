@@ -5,20 +5,24 @@ models:
     description: "Customer dimension sourced from the Silver layer."
     columns:
       - name: customer_id
-        description: "Customer business key."
+        description: "{{ doc('customer_id_description') }}"
         tests:
           - not_null
           - unique
       - name: company_name
+        description: "{{ doc('company_name_description') }}"
         tests:
           - not_null
       - name: customer_address
+        description: "{{ doc('customer_address_description') }}"
         tests:
           - not_null
       - name: city
+        description: "{{ doc('city_description') }}"
         tests:
           - not_null
       - name: customer_market_type
+        description: "{{ doc('customer_market_type_description') }}"
         tests:
           - not_null
           - accepted_values:
@@ -28,29 +32,34 @@ models:
     description: "Employee dimension sourced from the Silver layer."
     columns:
       - name: employee_id
-        description: "Employee business key."
+        description: "{{ doc('employee_id_description') }}"
         tests:
           - not_null
           - unique
       - name: full_name
+        description: "{{ doc('full_name_description') }}"
         tests:
           - not_null
       - name: hire_date
+        description: "{{ doc('hire_date_description') }}"
         tests:
           - not_null
       - name: manager_id
-        description: "Direct manager employee identifier."
+        description: "{{ doc('manager_id_description') }}"
         tests:
           - relationships:
               to: ref('dim_employees')
               field: employee_id
       - name: manager_full_name
+        description: "{{ doc('manager_full_name_description') }}"
         tests:
           - not_null
       - name: manager_title
+        description: "{{ doc('manager_title_description') }}"
         tests:
           - not_null
       - name: direct_reports
+        description: "{{ doc('direct_reports_description') }}"
         tests:
           - not_null
           - dbt_utils.accepted_range:
@@ -60,46 +69,56 @@ models:
     description: "Product dimension sourced from the Silver layer."
     columns:
       - name: product_id
-        description: "Product business key."
+        description: "{{ doc('product_id_description') }}"
         tests:
           - not_null
           - unique
       - name: category_id
+        description: "{{ doc('category_id_description') }}"
         tests:
           - not_null
       - name: supplier_id
+        description: "{{ doc('supplier_id_description') }}"
         tests:
           - not_null
       - name: product_name
+        description: "{{ doc('product_name_description') }}"
         tests:
           - not_null
       - name: unit_price
+        description: "{{ doc('unit_price_description') }}"
         tests:
           - not_null
           - dbt_utils.accepted_range:
               min_value: 0
       - name: units_in_stock
+        description: "{{ doc('units_in_stock_description') }}"
         tests:
           - not_null
           - dbt_utils.accepted_range:
               min_value: 0
       - name: units_on_order
+        description: "{{ doc('units_on_order_description') }}"
         tests:
           - not_null
           - dbt_utils.accepted_range:
               min_value: 0
       - name: reorder_level
+        description: "{{ doc('reorder_level_description') }}"
         tests:
           - not_null
           - dbt_utils.accepted_range:
               min_value: 0
       - name: is_discontinued
+        description: "{{ doc('is_discontinued_description') }}"
         tests:
           - not_null
       - name: is_out_of_stock
+        description: "{{ doc('is_out_of_stock_description') }}"
         tests:
           - not_null
       - name: needs_reorder
+        description: "{{ doc('needs_reorder_description') }}"
         tests:
           - not_null
 
@@ -107,42 +126,48 @@ models:
     description: "Daily calendar dimension generated from order dates."
     columns:
       - name: date_key
-        description: "Date identifier in YYYYMMDD format."
+        description: "{{ doc('date_key_description') }}"
         tests:
           - not_null
           - unique
       - name: date_day
-        description: "Calendar date."
+        description: "{{ doc('date_day_description') }}"
         tests:
           - not_null
           - unique
       - name: year
+        description: "{{ doc('year_description') }}"
         tests:
           - not_null
       - name: quarter
+        description: "{{ doc('quarter_description') }}"
         tests:
           - not_null
           - accepted_values:
               values: [1, 2, 3, 4]
       - name: month_number
+        description: "{{ doc('month_number_description') }}"
         tests:
           - not_null
           - dbt_utils.accepted_range:
               min_value: 1
               max_value: 12
       - name: week_number
+        description: "{{ doc('week_number_description') }}"
         tests:
           - not_null
           - dbt_utils.accepted_range:
               min_value: 1
               max_value: 53
       - name: day_of_week_number
+        description: "{{ doc('day_of_week_number_description') }}"
         tests:
           - not_null
           - dbt_utils.accepted_range:
               min_value: 1
               max_value: 7
       - name: is_weekend
+        description: "{{ doc('is_weekend_description') }}"
         tests:
           - not_null
 
@@ -150,79 +175,93 @@ models:
     description: "Sales fact table at the order and product line level."
     columns:
       - name: sales_id
-        description: "Surrogate key for each order-product line."
+        description: "{{ doc('sales_id_description') }}"
         tests:
           - not_null
           - unique
       - name: order_id
+        description: "{{ doc('order_id_description') }}"
         tests:
           - not_null
       - name: product_id
+        description: "{{ doc('product_id_description') }}"
         tests:
           - not_null
           - relationships:
               to: ref('dim_products')
               field: product_id
       - name: customer_id
+        description: "{{ doc('customer_id_description') }}"
         tests:
           - not_null
           - relationships:
               to: ref('dim_customers')
               field: customer_id
       - name: employee_id
+        description: "{{ doc('employee_id_description') }}"
         tests:
           - not_null
           - relationships:
               to: ref('dim_employees')
               field: employee_id
       - name: order_date
+        description: "{{ doc('order_date_description') }}"
         tests:
           - not_null
           - relationships:
               to: ref('dim_time')
               field: date_day
       - name: required_date
+        description: "{{ doc('required_date_description') }}"
         tests:
           - relationships:
               to: ref('dim_time')
               field: date_day
       - name: shipped_date
+        description: "{{ doc('shipped_date_description') }}"
         tests:
           - relationships:
               to: ref('dim_time')
               field: date_day
       - name: shipping_status
+        description: "{{ doc('shipping_status_description') }}"
         tests:
           - not_null
           - accepted_values:
               values: ["Pending", "Delayed", "On Time"]
       - name: freight
+        description: "{{ doc('freight_description') }}"
         tests:
           - not_null
           - dbt_utils.accepted_range:
               min_value: 0
       - name: quantity_sold
+        description: "{{ doc('quantity_sold_description') }}"
         tests:
           - not_null
           - dbt_utils.accepted_range:
               min_value: 1
       - name: actual_unit_price
+        description: "{{ doc('actual_unit_price_description') }}"
         tests:
           - not_null
           - dbt_utils.accepted_range:
               min_value: 0
       - name: discount_pct
+        description: "{{ doc('discount_pct_description') }}"
         tests:
           - not_null
           - dbt_utils.accepted_range:
               min_value: 0
               max_value: 1
       - name: net_revenue
+        description: "{{ doc('net_revenue_description') }}"
         tests:
           - not_null
           - dbt_utils.accepted_range:
               min_value: 0
       - name: price_status
+        description: "{{ doc('price_status_description') }}"
         tests:
           - not_null
           - accepted_values:

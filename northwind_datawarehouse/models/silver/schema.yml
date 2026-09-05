@@ -5,39 +5,49 @@ models:
     description: "Cleaned and enriched customer data from the bronze layer."
     columns:
       - name: customer_id
-        description: "Primary key for the customer."
+        description: "{{ doc('customer_id_description') }}"
         tests:
           - not_null
           - unique
+
       - name: company_name
-        description: "Customer company name."
+        description: "{{ doc('company_name_description') }}"
         tests:
           - not_null
+
       - name: contact_name
-        description: "Customer contact name."
+        description: "{{ doc('contact_name_description') }}"
+
       - name: contact_title
-        description: "Customer contact title."
+        description: "{{ doc('contact_title_description') }}"
+
       - name: contact_role_category
-        description: "Contact role category."
+        description: "{{ doc('contact_role_category_description') }}"
         tests:
           - accepted_values:
               values: ["Executive", "Manager", "Sales", "Other"]
+
       - name: customer_address
-        description: "Customer street address."
+        description: "{{ doc('customer_address_description') }}"
         tests:
           - not_null
+
       - name: city
-        description: "Customer city."
+        description: "{{ doc('city_description') }}"
         tests:
           - not_null
+
       - name: region
-        description: "Customer region."
+        description: "{{ doc('region_description') }}"
+
       - name: postal_code
-        description: "Customer postal code."
+        description: "{{ doc('postal_code_description') }}"
+
       - name: country
-        description: "Customer country."
+        description: "{{ doc('country_description') }}"
+
       - name: customer_market_type
-        description: "Customer market classification."
+        description: "{{ doc('customer_market_type_description') }}"
         tests:
           - accepted_values:
               values: ["Domestic", "International"]
@@ -46,56 +56,70 @@ models:
     description: "Cleaned and enriched order data from the bronze layer."
     columns:
       - name: order_id
-        description: "Primary key for the order."
+        description: "{{ doc('order_id_description') }}"
         tests:
           - not_null
           - unique
+
       - name: customer_id
-        description: "Customer who placed the order."
+        description: "{{ doc('customer_id_description') }}"
         tests:
           - not_null
           - relationships:
               to: ref('silver_customers')
               field: customer_id
+
       - name: employee_id
-        description: "Employee responsible for the order."
+        description: "{{ doc('employee_id_description') }}"
         tests:
           - not_null
           - relationships:
               to: ref('silver_employees')
               field: employee_id
+
       - name: order_date
-        description: "Order creation date."
+        description: "{{ doc('order_date_description') }}"
         tests:
           - not_null
+
       - name: required_date
-        description: "Date on which the order is required."
+        description: "{{ doc('required_date_description') }}"
+
       - name: shipped_date
-        description: "Date on which the order was shipped."
+        description: "{{ doc('shipped_date_description') }}"
+
       - name: customer_address
-        description: "Customer address at the time of the order."
+        description: "{{ doc('customer_address_description') }}"
+
       - name: customer_city
-        description: "Customer city."
+        description: "{{ doc('customer_city_description') }}"
+
       - name: customer_country
-        description: "Customer country."
+        description: "{{ doc('customer_country_description') }}"
+
       - name: ship_address
-        description: "Shipping address."
+        description: "{{ doc('ship_address_description') }}"
+
       - name: ship_city
-        description: "Shipping city."
+        description: "{{ doc('ship_city_description') }}"
+
       - name: ship_country
-        description: "Shipping country."
+        description: "{{ doc('ship_country_description') }}"
+
       - name: is_different_shipping_address
-        description: "Indicates whether the shipping address differs from the customer address."
+        description: "{{ doc('is_different_shipping_address_description') }}"
         tests:
           - not_null
+
       - name: shipping_status
-        description: "Order shipping status."
+        description: "{{ doc('shipping_status_description') }}"
         tests:
           - not_null
           - accepted_values:
               values: ["Pending", "Delayed", "On Time"]
+
       - name: freight
-        description: "Order freight cost."
+        description: "{{ doc('freight_description') }}"
         tests:
           - not_null
           - dbt_utils.accepted_range:
@@ -105,48 +129,61 @@ models:
     description: "Cleaned and enriched employee data from the bronze layer."
     columns:
       - name: employee_id
-        description: "Primary key for the employee."
+        description: "{{ doc('employee_id_description') }}"
         tests:
           - not_null
           - unique
+
       - name: full_name
-        description: "Employee full name."
+        description: "{{ doc('full_name_description') }}"
         tests:
           - not_null
+
       - name: title
-        description: "Employee job title."
+        description: "{{ doc('title_description') }}"
+
       - name: birth_date
-        description: "Employee birth date."
+        description: "{{ doc('birth_date_description') }}"
+
       - name: hire_date
-        description: "Employee hire date."
+        description: "{{ doc('hire_date_description') }}"
         tests:
           - not_null
+
       - name: employee_address
-        description: "Employee street address."
+        description: "{{ doc('employee_address_description') }}"
+
       - name: city
-        description: "Employee city."
+        description: "{{ doc('city_description') }}"
+
       - name: region
-        description: "Employee region."
+        description: "{{ doc('region_description') }}"
+
       - name: country
-        description: "Employee country."
+        description: "{{ doc('country_description') }}"
+
       - name: postal_code
-        description: "Employee postal code."
+        description: "{{ doc('postal_code_description') }}"
+
       - name: manager_id
-        description: "Employee manager identifier."
+        description: "{{ doc('manager_id_description') }}"
         tests:
           - relationships:
               to: ref('silver_employees')
               field: employee_id
+
       - name: manager_full_name
-        description: "Employee manager full name."
+        description: "{{ doc('manager_full_name_description') }}"
         tests:
           - not_null
+
       - name: manager_title
-        description: "Employee manager title."
+        description: "{{ doc('manager_title_description') }}"
         tests:
           - not_null
+
       - name: direct_reports
-        description: "Number of employees directly reporting to this employee."
+        description: "{{ doc('direct_reports_description') }}"
         tests:
           - not_null
           - dbt_utils.accepted_range:
@@ -156,52 +193,61 @@ models:
     description: "Cleaned and enriched order line item data."
     columns:
       - name: order_id
-        description: "Order identifier."
+        description: "{{ doc('order_id_description') }}"
         tests:
           - not_null
           - relationships:
               to: ref('silver_orders')
               field: order_id
+
       - name: product_id
-        description: "Product identifier."
+        description: "{{ doc('product_id_description') }}"
         tests:
           - not_null
           - relationships:
               to: ref('silver_products')
               field: product_id
+
       - name: actual_unit_price
-        description: "Unit price charged in the order."
+        description: "{{ doc('actual_unit_price_description') }}"
         tests:
           - not_null
           - dbt_utils.accepted_range:
               min_value: 0
+
       - name: catalog_unit_price
-        description: "Current catalog unit price."
+        description: "{{ doc('catalog_unit_price_description') }}"
+
       - name: quantity_sold
-        description: "Quantity ordered."
+        description: "{{ doc('quantity_sold_description') }}"
         tests:
           - not_null
           - dbt_utils.accepted_range:
               min_value: 1
+
       - name: discount_pct
-        description: "Discount applied to the order line."
+        description: "{{ doc('discount_pct_description') }}"
         tests:
           - not_null
           - dbt_utils.accepted_range:
               min_value: 0
               max_value: 1
+
       - name: net_revenue
-        description: "Revenue after applying the discount."
+        description: "{{ doc('net_revenue_description') }}"
         tests:
           - not_null
           - dbt_utils.accepted_range:
               min_value: 0
+
       - name: unit_price_diff
-        description: "Difference between actual and catalog unit prices."
+        description: "{{ doc('unit_price_diff_description') }}"
+
       - name: revenue_impact
-        description: "Revenue impact caused by the unit price difference."
+        description: "{{ doc('revenue_impact_description') }}"
+
       - name: price_status
-        description: "Actual price compared with the catalog price."
+        description: "{{ doc('price_status_description') }}"
         tests:
           - not_null
           - accepted_values:
@@ -211,71 +257,86 @@ models:
     description: "Cleaned and enriched product data."
     columns:
       - name: product_id
-        description: "Primary key for the product."
+        description: "{{ doc('product_id_description') }}"
         tests:
           - not_null
           - unique
+
       - name: category_id
-        description: "Product category identifier."
+        description: "{{ doc('category_id_description') }}"
         tests:
           - not_null
           - relationships:
               to: ref('bronze_categories')
               field: category_id
+
       - name: supplier_id
-        description: "Product supplier identifier."
+        description: "{{ doc('supplier_id_description') }}"
         tests:
           - not_null
           - relationships:
               to: ref('bronze_suppliers')
               field: supplier_id
+
       - name: product_name
-        description: "Product name."
+        description: "{{ doc('product_name_description') }}"
         tests:
           - not_null
+
       - name: quantity_per_unit
-        description: "Product quantity description."
+        description: "{{ doc('quantity_per_unit_description') }}"
+
       - name: category_name
-        description: "Product category name."
+        description: "{{ doc('category_name_description') }}"
+
       - name: category_description
-        description: "Product category description."
+        description: "{{ doc('category_description_description') }}"
+
       - name: supplier_name
-        description: "Supplier company name."
+        description: "{{ doc('supplier_name_description') }}"
+
       - name: supplier_country
-        description: "Supplier country."
+        description: "{{ doc('supplier_country_description') }}"
+
       - name: unit_price
-        description: "Product unit price."
+        description: "{{ doc('unit_price_description') }}"
         tests:
           - not_null
           - dbt_utils.accepted_range:
               min_value: 0
+
       - name: units_in_stock
-        description: "Units currently in stock."
+        description: "{{ doc('units_in_stock_description') }}"
         tests:
           - not_null
           - dbt_utils.accepted_range:
               min_value: 0
+
       - name: units_on_order
-        description: "Units currently on order."
+        description: "{{ doc('units_on_order_description') }}"
         tests:
           - not_null
           - dbt_utils.accepted_range:
               min_value: 0
+
       - name: reorder_level
-        description: "Stock level that triggers replenishment."
+        description: "{{ doc('reorder_level_description') }}"
         tests:
           - not_null
           - dbt_utils.accepted_range:
               min_value: 0
+
       - name: is_discontinued
-        description: "Indicates whether the product is discontinued."
+        description: "{{ doc('is_discontinued_description') }}"
         tests:
           - not_null
+
       - name: is_out_of_stock
-        description: "Indicates whether the product is out of stock."
+        description: "{{ doc('is_out_of_stock_description') }}"
         tests:
           - not_null
+
       - name: needs_reorder
-        description: "Indicates whether the product needs replenishment."
+        description: "{{ doc('needs_reorder_description') }}"
         tests:
           - not_null
